@@ -1,16 +1,16 @@
 'use strict';
 
 const Test = require('tape');
-const RxHttpServer = require('../lib/observables/server');
+const { RxHttpServer } = require('../lib/observables/server');
 const { RxHttpClient } = require('../lib/observables/client');
 const Http = require('http');
 
 Test('test httprx', (t) => {
 
     t.test('get', (t) => {
-        const server = new RxHttpServer(Http.createServer(), 3000);
+        const server = new RxHttpServer({ port: 3000 });
 
-        server.subscribe(
+        server.skip(1).subscribe(
             ({ request, response }) => {
                 response.next('success.');
                 response.complete();
@@ -37,9 +37,9 @@ Test('test httprx', (t) => {
     });
 
     t.test('post', (t) => {
-        const server = new RxHttpServer(Http.createServer(), 3000);
+        const server = new RxHttpServer({ port: 3000 });
 
-        server.flatMap(
+        server.skip(1).flatMap(
             ({ request, response }) => {
                 return request.toArray().map((body) => {
                     request.payload = Buffer.concat(body);
