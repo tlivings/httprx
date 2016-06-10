@@ -1,9 +1,8 @@
 'use strict';
 
 const Test = require('tape');
-const { RxHttpServer } = require('../lib/observables/server');
-const { RxHttpClient } = require('../lib/observables/client');
 const Http = require('http');
+const { RxHttpServer, RxHttpClient } = require('../index');
 
 Test('test httprx', (t) => {
 

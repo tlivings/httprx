@@ -22,8 +22,8 @@
   },
   "scripts": {
     "cover": "istanbul cover node_modules/.bin/tape -- test/*.js",
-    "lint": "eslint lib",
+    "lint": "eslint index.js lib",
     "test": "tape test/*.js"
   },
-  "main": "./lib"
+  "main": "./index.js"
 }
