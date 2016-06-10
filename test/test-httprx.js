@@ -12,7 +12,7 @@ Test('test httprx', (t) => {
 
         server.skip(1).subscribe(
             ({ request, response }) => {
-                response.next('success.');
+                response.next('success');
                 response.complete();
             },
             (error) => {
@@ -28,7 +28,12 @@ Test('test httprx', (t) => {
                 t.equal(response.raw.statusCode, 200, 'OK status.');
                 response.toArray().subscribe(
                     (data) => {
-                        t.equal(Buffer.concat(data).toString(), 'success.', 'body written.');
+                        t.equal(Buffer.concat(data).toString(), 'success', 'body written.');
+                    },
+                    (error) => {
+                        console.log(error);
+                    },
+                    () => {
                         server.raw.close();
                     }
                 );
@@ -70,6 +75,11 @@ Test('test httprx', (t) => {
                 response.toArray().subscribe(
                     (data) => {
                         t.equal(Buffer.concat(data).toString(), 'test', 'body written.');
+                    },
+                    (error) => {
+                        console.log(error);
+                    },
+                    () => {
                         server.raw.close();
                     }
                 );
