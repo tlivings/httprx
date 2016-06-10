@@ -16,9 +16,9 @@
     "wreck": "^7.2.0"
   },
   "devDependencies": {
-    "eslint": "^1.10.3",
-    "istanbul": "^0.4.1",
-    "tape": "^4.2.2"
+    "eslint": "^2.11.1",
+    "istanbul": "^0.4.3",
+    "tape": "^4.5.1"
   },
   "scripts": {
     "cover": "istanbul cover node_modules/.bin/tape -- test/*.js",

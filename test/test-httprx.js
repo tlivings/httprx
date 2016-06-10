@@ -1,3 +1,4 @@
+'use strict';
 
 const Test = require('tape');
 const RxHttpServer = require('../lib/observables/server');
