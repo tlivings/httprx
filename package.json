@@ -1,0 +1,29 @@
+{
+  "name": "httprx",
+  "description": "",
+  "version": "0.0.1",
+  "author": "Trevor Livingston <tlivings@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tlivings/httprx.git"
+  },
+  "bugs": "http://github.com/tlivings/httprx/issues",
+  "engines": {
+    "node": ">= 6.0.0"
+  },
+  "dependencies": {
+    "rxjs": "^5.0.0-",
+    "wreck": "^7.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^1.10.3",
+    "istanbul": "^0.4.1",
+    "tape": "^4.2.2"
+  },
+  "scripts": {
+    "cover": "istanbul cover node_modules/.bin/tape -- test/*.js",
+    "lint": "eslint lib",
+    "test": "tape test/*.js"
+  },
+  "main": "./lib"
+}
