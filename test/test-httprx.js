@@ -9,7 +9,7 @@ Test('test httprx', (t) => {
     t.test('get', (t) => {
         const server = new RxHttpServer({ port: 3000 });
 
-        server.skip(1).subscribe(
+        server.subscribe(
             ({ request, response }) => {
                 response.next('success');
                 response.complete();
@@ -43,7 +43,7 @@ Test('test httprx', (t) => {
     t.test('post', (t) => {
         const server = new RxHttpServer({ port: 3000 });
 
-        server.skip(1).flatMap(
+        server.flatMap(
             ({ request, response }) => {
                 return request.toArray().map((body) => {
                     request.payload = Buffer.concat(body);
