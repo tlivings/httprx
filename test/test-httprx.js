@@ -16,6 +16,7 @@ Test('test httprx', (t) => {
             },
             (error) => {
                 console.error(error.stack);
+                process.exit();
             },
             () => {
                 t.end();
@@ -33,6 +34,7 @@ Test('test httprx', (t) => {
             },
             (error) => {
                 console.log(error.stack);
+                server.raw.close();
             },
             () => {
                 server.raw.close();
@@ -57,6 +59,7 @@ Test('test httprx', (t) => {
             },
             (error) => {
                 console.error(error.stack);
+                process.exit();
             },
             () => {
                 t.end();
@@ -79,6 +82,38 @@ Test('test httprx', (t) => {
             },
             (error) => {
                 console.log(error.stack);
+                server.raw.close();
+            },
+            () => {
+                server.raw.close();
+            }
+        );
+    });
+
+    t.test('response error', (t) => {
+        const server = new RxHttpServer({ port: 3000 });
+
+        server.subscribe(
+            ({ request, response }) => {
+                response.headers = { bad_header: '\fboom' };
+                response.complete();
+            },
+            (error) => {
+                console.error(error.stack);
+                process.exit();
+            },
+            () => {
+                t.end();
+            }
+        );
+
+        new RxHttpClient({method: 'GET', hostname: 'localhost', port: 3000}).subscribe(
+            (response) => {
+                t.equal(response.raw.statusCode, 500, 'ERROR status.');
+            },
+            (error) => {
+                console.log(error.stack);
+                server.raw.close();
             },
             () => {
                 server.raw.close();
