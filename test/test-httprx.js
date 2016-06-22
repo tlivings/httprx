@@ -22,20 +22,20 @@ Test('test httprx', (t) => {
             }
         );
 
-        new RxHttpClient({method: 'GET', hostname: 'localhost', port: 3000}).subscribe(
+        new RxHttpClient({method: 'GET', hostname: 'localhost', port: 3000}).flatMap(
             (response) => {
                 t.equal(response.raw.statusCode, 200, 'OK status.');
-                response.toArray().subscribe(
-                    (data) => {
-                        t.equal(Buffer.concat(data).toString(), 'success', 'body written.');
-                    },
-                    (error) => {
-                        console.log(error);
-                    },
-                    () => {
-                        server.raw.close();
-                    }
-                );
+                return response.toArray();
+            }
+        ).subscribe(
+            (data) => {
+                t.equal(Buffer.concat(data).toString(), 'success', 'body written.');
+            },
+            (error) => {
+                console.log(error.stack);
+            },
+            () => {
+                server.raw.close();
             }
         );
     });
@@ -68,20 +68,20 @@ Test('test httprx', (t) => {
         client.subject.next('test');
         client.subject.complete();
 
-        client.subscribe(
+        client.flatMap(
             (response) => {
                 t.equal(response.raw.statusCode, 200, 'OK status.');
-                response.toArray().subscribe(
-                    (data) => {
-                        t.equal(Buffer.concat(data).toString(), 'test', 'body written.');
-                    },
-                    (error) => {
-                        console.log(error);
-                    },
-                    () => {
-                        server.raw.close();
-                    }
-                );
+                return response.toArray();
+            }
+        ).subscribe(
+            (data) => {
+                t.equal(Buffer.concat(data).toString(), 'test', 'body written.');
+            },
+            (error) => {
+                console.log(error.stack);
+            },
+            () => {
+                server.raw.close();
             }
         );
     });
